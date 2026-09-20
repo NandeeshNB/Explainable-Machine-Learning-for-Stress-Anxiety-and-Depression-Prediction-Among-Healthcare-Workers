@@ -1,0 +1,39 @@
+{
+  "feature_columns": [
+    "Humidity",
+    "Temperature",
+    "Step_count",
+    "workhours",
+    "patients_attended",
+    "dept_stress",
+    "env_stress",
+    "workload_intensity",
+    "department_encoded",
+    "activity_level_encoded",
+    "shift_type_encoded"
+  ],
+  "stress_labels": {
+    "0": "Low",
+    "1": "Medium",
+    "2": "High"
+  },
+  "departments": [
+    "IPD",
+    "SRG",
+    "MED",
+    "OPD",
+    "OBG",
+    "RHEUN",
+    "ICU",
+    "DER",
+    "ER",
+    "PED"
+  ],
+  "model_info": {
+    "model_type": "XGBoost",
+    "n_features": 11,
+    "n_classes": 3,
+    "accuracy": 0.970074812967581,
+    "trained_date": "2026-02-23 00:00:19"
+  }
+}

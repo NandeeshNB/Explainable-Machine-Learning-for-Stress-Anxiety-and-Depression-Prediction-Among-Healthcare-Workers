@@ -1,0 +1,33 @@
+# ══════════════════════════════════════════════════════
+# Healthcare Worker Stress Predictor — Requirements
+# Install: pip install -r requirements.txt
+# Python:  3.9+ recommended
+# ══════════════════════════════════════════════════════
+
+# ── Core UI ──────────────────────────────────────────
+streamlit==1.45.0
+
+# ── Data Processing ───────────────────────────────────
+pandas==2.2.3
+numpy==1.26.4
+openpyxl==3.1.5          # reading .xlsx survey data
+
+# ── Visualization ─────────────────────────────────────
+matplotlib==3.9.4
+seaborn==0.13.2
+
+# ── Machine Learning ──────────────────────────────────
+scikit-learn==1.6.1
+xgboost==2.1.4
+
+# ── Deep Learning (uncomment if using MLP model) ──────
+# tensorflow==2.17.0
+
+# ── Explainable AI ────────────────────────────────────
+shap==0.46.0
+
+# ── Generative AI (new SDK — replaces google-generativeai) ──
+google-genai==1.16.0
+
+# ── Utilities (pickle & datetime are built-in, no install needed) ──
+python-dateutil==2.9.0
