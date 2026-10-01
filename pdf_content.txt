@@ -1,0 +1,1396 @@
+=== PAGE 1 ===
+MENTAL HEALTH PREDICTION USING MACHINE LEARNING FOR HEALTHCARE WORKERS
+An Explainable, Fair and Calibrated Multi-Source Framework for Stress, Anxiety and Depression Risk
+Prediction
+Optional alternate title: Explainable, Fair and Calibrated Multi-Source Mental Health Risk Prediction
+for Healthcare Workers — An Evidence-Grounded Unified Framework Using Machine Learning and
+Generative AI
+ABSTRACT
+Mental health is a significant concern among healthcare workers due to demanding workloads, long
+working hours, high patient responsibility, irregular shifts, emotionally challenging situations and
+continuous exposure to stressful clinical environments. Prolonged occupational stress can contribute
+to burnout and may also be associated with anxiety and depression. Therefore, identifying elevated
+mental-health risk among healthcare workers at an early stage can support awareness and preventive
+intervention.
+This project, Mental Health Prediction Using Machine Learning for Healthcare Workers, extends an
+existing machine-learning-based stress and burnout prediction system developed during the previous
+semester. The previous system primarily focused on stress and burnout risk using physiological,
+environmental and occupational information. The proposed project expands the scope toward
+broader mental-health risk prediction by incorporating the DASS-42 dataset, which provides
+psychological indicators associated with depression, anxiety and stress, and by incorporating an
+additional healthcare workforce mental-health dataset that provides workforce-level context.
+The proposed framework utilizes four complementary datasets: the Stress-Lysis dataset, the
+healthcare workplace survey dataset, the DASS-42 dataset and the Healthcare Workforce Mental
+Health dataset. The Stress-Lysis dataset contributes physical and environmental information such as
+temperature, humidity and activity level. The workplace survey contributes occupational information
+including weekly working hours, patients per shift, department and stress score. DASS-42 contributes
+psychological information through its depression, anxiety and stress questionnaire responses. The
+workforce dataset contributes workplace stressor and workforce mental-health outcome information
+for organization-level analysis and robustness experiments.
+Because these datasets originate from different sources and do not represent the same individuals,
+they will not be directly concatenated row-by-row. Instead, the project will develop a unified multi-
+source feature representation in which physical, environmental, occupational, psychological and
+workforce information is standardized and transformed into complementary features for the mental-
+health prediction framework.
+Five machine-learning algorithms will be implemented and compared: Decision Tree, Random Forest,
+XGBoost, LightGBM and Multilayer Perceptron (MLP). Their performance will be evaluated using
+accuracy, precision, recall, F1-score, confusion matrices and other appropriate classification metrics.
+
+=== PAGE 2 ===
+The evaluation is further extended with probability calibration (reliability diagrams, Brier score,
+Expected Calibration Error), fairness assessment using Fairlearn, class-imbalance experiments using
+class weighting and SMOTE, and ablation studies that quantify the contribution of each dataset,
+feature group and methodological component.
+To improve interpretability, SHAP-based Explainable AI will be used to identify the factors contributing
+to individual and overall predictions, and DiCE will be used to generate counterfactual "what-if"
+explanations. A Generative AI component, grounded through Retrieval-Augmented Generation (RAG),
+will then convert model predictions and feature explanations into understandable mental-health risk
+summaries for healthcare workers, together with an organization-oriented workforce report.
+The existing Python, Jupyter Notebook and Streamlit architecture will be extended rather than
+replaced with a separate frontend, backend or database system, with Plotly added for interactive
+analytics and MLflow as an optional experiment-tracking layer. The final system will serve as an
+experimental and educational framework for mental-health risk prediction among healthcare workers
+and will not be intended as a clinical diagnostic system.
+CHAPTER 1 — INTRODUCTION
+1.1 Background
+Healthcare workers operate in environments that can involve high workloads, long working hours,
+emergency situations, irregular schedules, patient responsibility and emotionally demanding
+interactions. These conditions can contribute to elevated occupational stress and may affect overall
+psychological well-being.
+Mental health among healthcare workers is therefore an important area for research. Stress, anxiety
+and depression are interconnected but distinct dimensions of psychological well-being. A system that
+focuses only on stress or burnout may not capture the broader mental-health profile of a healthcare
+worker.
+Machine learning provides an opportunity to identify patterns in structured data and estimate the
+likelihood of different mental-health risk categories. However, a prediction alone is not sufficient for a
+responsible system. The predicted probability should be reliable, the errors should be examined across
+groups, and the reasoning behind the prediction should be explainable.
+The proposed project focuses specifically on healthcare workers and extends the existing stress and
+burnout prediction system into a broader, responsible mental-health prediction framework.
+The system will investigate three major dimensions:
+Stress
++
+Anxiety
+
+=== PAGE 3 ===
++
+Depression
+using information from physical, environmental, occupational, psychological and workforce sources.
+1.2 Existing Project
+The previous semester's project, Explainable Generative AI for Stress and Burnout Risk Prediction in
+Healthcare Workers, focused on identifying stress and burnout-related patterns among healthcare
+workers.
+The existing project utilized two major datasets.
+Stress-Lysis Dataset
+The Stress-Lysis dataset consists of approximately 2,001 records containing:
+Ambient humidity
+Ambient temperature
+Number of steps
+Stress level
+The stress variable is represented using three levels:
+Low
+Medium
+High
+Healthcare Workplace Survey
+The workplace survey contains approximately 150 records across ten hospital departments:
+OPD, IPD, ICU, ER, OBG, PED, MED, SRG, DER, RHEUN
+The dataset contains variables such as:
+Weekly work hours
+Patients per shift
+Department ID
+Stress score
+The previous system used:
+Random Forest
+
+=== PAGE 4 ===
+XGBoost
+MLP
+SHAP
+Generative AI
+Streamlit
+1.3 Proposed Expansion
+The proposed project expands the existing system from:
+Stress and Burnout Risk Prediction
+to:
+Explainable, Fair and Calibrated Mental Health Risk Prediction among Healthcare Workers
+The major additions are:
+The DASS-42 dataset (psychological dimension).
+A fourth Healthcare Workforce Mental Health dataset (workforce dimension).
+A Responsible AI layer — calibration and fairness.
+Counterfactual explanations using DiCE alongside SHAP.
+Ablation studies to provide experimental evidence for each component.
+RAG-grounded Generative AI reporting.
+Plotly-based interactive analytics and an optional MLflow tracking layer.
+The final framework will consider:
+Physical / Environmental Factors
++
+Occupational Factors
++
+Psychological Factors
++
+Workforce Factors
+↓
+Mental Health Risk Prediction
+
+=== PAGE 5 ===
+↓
+Stress + Anxiety + Depression
+↓
+Calibration + Fairness + Explainability
+↓
+Evidence-Grounded Report
+This provides a clear continuation of the previous project while significantly increasing its scope and
+methodological depth.
+1.4 Motivation
+Healthcare workers frequently work under demanding conditions. Workload, working hours, patient
+volume and environmental factors may influence stress levels, while psychological factors can provide
+additional information regarding anxiety and depression.
+The previous project primarily concentrated on stress and burnout. However, mental health is broader
+than these two outcomes.
+Therefore, the proposed project introduces DASS-42 to provide psychological information associated
+with depression, anxiety and stress, and a workforce dataset to provide organization-level context
+such as workplace stressors and workforce mental-health outcomes.
+A second motivation is responsibility. A mental-health risk system that outputs a probability should be
+evaluated for whether that probability is meaningful, and whether its errors are distributed unevenly
+across groups. The project therefore aims to investigate not only how accurately the models predict,
+but also how reliably, how fairly and how understandably.
+1.5 Problem Statement
+Healthcare workers may experience substantial occupational and psychological stress due to long
+working hours, high patient workloads, demanding clinical environments and emotionally challenging
+situations.
+Existing systems may focus on individual factors or a single mental-health outcome, and often report
+only predictive accuracy without examining probability reliability, group-level disparities or the
+contribution of individual components.
+The revised problem is therefore to design and experimentally evaluate a unified, explainable and
+responsible machine-learning framework that can learn from complementary physical/environmental,
+occupational, psychological and workforce information, while explicitly accounting for data-source
+differences, class imbalance, calibration, fairness and uncertainty.
+
+=== PAGE 6 ===
+The system will also investigate whether model explanations can be converted into understandable,
+evidence-grounded reports without allowing the Generative AI layer to independently diagnose or
+determine risk.
+1.6 Aim
+To develop and evaluate an explainable, fair, calibrated and evidence-grounded multi-source machine-
+learning framework for predicting stress, anxiety and depression risk among healthcare workers using
+physical, environmental, occupational, psychological and workforce information.
+1.7 Objectives
+The major objectives are:
+Extend the existing healthcare-worker stress and burnout prediction system.
+Incorporate the DASS-42 dataset into the existing project.
+Incorporate a fourth Healthcare Workforce Mental Health dataset for workforce-level analysis and
+robustness experiments.
+Utilize four complementary datasets:
+Stress-Lysis
+Healthcare Workplace Survey
+DASS-42
+Healthcare Workforce Mental Health dataset
+Develop a unified multi-source feature representation without assuming row-wise identity across
+independent datasets.
+Incorporate physical, environmental, occupational, psychological and workforce factors.
+Develop and compare five machine-learning models: Decision Tree, Random Forest, XGBoost,
+LightGBM, MLP.
+Predict three major mental-health dimensions: Stress, Anxiety, Depression.
+Evaluate model performance using standard classification metrics.
+Handle class imbalance using SMOTE, class weighting or other justified methods, applied only to
+training data and only when supported by exploratory analysis.
+Measure probability reliability using calibration curves, Brier score and Expected Calibration Error
+(ECE), and investigate post-hoc calibration.
+Assess group-level fairness using appropriate Fairlearn metrics and investigate mitigation methods.
+
+=== PAGE 7 ===
+Apply SHAP for global and local explainable predictions.
+Apply DiCE for constrained counterfactual explanations.
+Perform ablation studies to quantify the contribution of datasets, feature groups and responsible-AI
+components.
+Use RAG to ground Generative AI reports in retrieved evidence and supplied model explanations.
+Produce both individual and organization-oriented report views.
+Extend the existing Streamlit application with Plotly interactive analytics.
+Optionally track experiments using MLflow.
+Analyze the limitations and applicability of machine-learning-based mental-health risk prediction for
+healthcare workers, including synthetic-data caveats.
+1.8 Research Questions
+RQ1 — Can physical/environmental, occupational, psychological and workforce mental-health
+information be incorporated into a unified machine-learning framework for mental-health risk
+prediction among healthcare workers without assuming row-wise identity across datasets?
+RQ2 — How do Decision Tree, Random Forest, XGBoost, LightGBM and MLP compare across the stress,
+anxiety and depression prediction tasks?
+RQ3 — How much do different datasets and feature groups contribute to predictive performance?
+RQ4 — How does class balancing (class weighting, SMOTE) affect recall, F1, calibration and fairness?
+RQ5 — Are the model probabilities well calibrated, and can post-hoc calibration improve probability
+reliability?
+RQ6 — Do prediction errors or performance metrics differ across available demographic/contextual
+groups?
+RQ7 — Can fairness mitigation reduce measured disparities without unacceptable degradation in
+predictive performance or calibration?
+RQ8 — Can SHAP and DiCE provide complementary explanations for model predictions?
+RQ9 — Can RAG-grounded Generative AI produce more evidence-grounded and transparent reports
+than an ungrounded generation approach?
+RQ10 — Can the final framework support both individual-level interpretation and organization-level
+workforce analysis without presenting model outputs as clinical diagnoses?
+CHAPTER 2 — DATASETS USED
+
+=== PAGE 8 ===
+2.1 Overview
+The proposed system uses four complementary datasets.
+Dataset Main Information Role
+Temperature, humidity, steps,
+Stress-Lysis Physical / environmental factors
+stress
+Healthcare Workplace Work hours, patients/shift,
+Occupational factors
+Survey department, stress
+Psychological questionnaire
+DASS-42 Depression, anxiety and stress
+responses
+Workplace stressors and
+Healthcare Workforce Workforce-level analysis, additional
+workforce mental-health
+Mental Health features/targets, robustness experiments
+outcomes
+The four datasets are not treated as if they contain the same individuals. Instead, they provide
+complementary information that contributes to the overall unified framework.
+2.2 Stress-Lysis Dataset
+The Stress-Lysis dataset consists of approximately 2,001 records.
+Variables
+Ambient Humidity
+Ambient Temperature
+Number of Steps
+Stress Level
+Stress Classes
+0 → Low
+1 → Medium
+2 → High
+Contribution
+The dataset provides the project's physical and environmental component.
+Potential derived variables include:
+Activity level
+
+=== PAGE 9 ===
+Environmental stress score
+Temperature-related indicator
+Humidity-related indicator
+Physical activity intensity
+2.3 Healthcare Workplace Survey Dataset
+The workplace survey contains approximately 150 records collected across ten hospital departments.
+Departments
+OPD, IPD, ICU, ER, OBG, PED, MED, SRG, DER, RHEUN
+Variables
+Weekly work hours
+Patients per shift
+Department ID
+Stress score
+Contribution
+This dataset provides the healthcare occupational component.
+Potential derived features include:
+Workload Intensity
+$$Workload\ Intensity = \frac{Patients\ per\ Shift}{Weekly\ Work\ Hours}$$
+Other derived features may include:
+Work-hour category
+Patient-load category
+Occupational workload score
+Department-level stress indicators
+The exact transformations will be finalized after exploratory analysis.
+2.4 DASS-42 Dataset
+DASS-42 is a 42-item psychological questionnaire designed to measure three dimensions:
+Depression
+
+=== PAGE 10 ===
+Anxiety
+Stress
+The 42 questions are divided into three 14-item subscales. Each question is generally scored on a four-
+point scale from 0 to 3.
+Contribution
+DASS-42 provides the psychological component. It can provide indicators for depression, anxiety and
+stress, and potentially relevant demographic/contextual information depending on the specific public
+dataset selected. Where such demographic attributes exist and are appropriate for analysis, they may
+also support the fairness evaluation described in Chapter 7.
+2.5 Healthcare Workforce Mental Health Dataset (New Addition)
+The fourth dataset is the Kaggle Healthcare Workforce Mental Health Dataset, which provides
+workplace stressor and workforce mental-health outcome information.
+Potential variables (exact schema to be verified from the downloaded CSV)
+Workplace stressors
+Burnout-related indicators
+Job satisfaction indicators
+Absenteeism-related variables
+Turnover-related variables
+Role/department/experience context
+Contribution
+This dataset provides the workforce mental-health component, supporting:
+Organization/department-level analysis
+Additional features or auxiliary targets
+Robustness and generalization experiments
+The organization-oriented report view
+Important dataset limitation
+If the Kaggle source confirms that the dataset is synthetic, it must be clearly labeled as such. Results
+derived from it should be presented as experimental evidence about the modeling framework, not as
+clinical or population-level evidence about actual healthcare workers. It is an additional source of
+
+=== PAGE 11 ===
+information and an experimental validation resource, not a fourth set of rows that can automatically
+be aligned to the other three.
+2.6 DASS-42 Target Categories
+DASS-42 scores can be converted into severity categories.
+Dimension Normal Mild Moderate Severe Extremely Severe
+Depression 0–9 10–13 14–20 21–27 ≥28
+Anxiety 0–7 8–9 10–14 15–19 ≥20
+Stress 0–14 15–18 19–25 26–33 ≥34
+The final target formulation will be selected after examining the actual class distribution in the chosen
+dataset. If severe class imbalance is observed, categories may be consolidated into fewer risk groups
+for a more reliable machine-learning experiment.
+2.7 Dataset Integration Strategy
+This is a critical part of the methodology.
+The project will not directly concatenate the four datasets row-by-row. For example, we will not
+assume:
+Stress-Lysis Row 1
++
+Workplace Row 1
++
+DASS-42 Row 1
++
+Workforce Row 1
+=
+Same Healthcare Worker
+because these datasets were collected independently.
+Instead, the system will create a unified analytical representation:
+Stress-Lysis
+↓
+
+=== PAGE 12 ===
+Physical / Environmental Representation
+Workplace Survey
+↓
+Occupational Representation
+DASS-42
+↓
+Psychological Representation
+Workforce Dataset
+↓
+Workforce Representation
+↓
+Unified Analytical Feature Framework
+(harmonized schema + source metadata)
+Each record retains a source/population label, which is later used for ablation studies, error analysis
+and dataset-shift discussion. This makes the methodology more scientifically defensible.
+CHAPTER 3 — PROPOSED METHODOLOGY
+3.1 Overall Architecture
+HEALTHCARE WORKERS
+│
+▼
+┌─────────────────────┐
+│ Mental Health Risk │
+│ Assessment │
+└──────────┬──────────┘
+
+=== PAGE 13 ===
+│
+┌───────────────┬───────┼───────┬───────────────┐
+▼ ▼ ▼ ▼
+PHYSICAL / OCCUPATIONAL PSYCHOLOGICAL WORKFORCE
+ENVIRONMENTAL FACTORS FACTORS FACTORS
+│ │ │ │
+▼ ▼ ▼ ▼
+Stress-Lysis Workplace Survey DASS-42 Workforce Dataset
+│ │ │ │
+└───────────────┴───────┬───────┴───────────────┘
+▼
+Source Validation
+│
+▼
+Data Preprocessing
+│
+▼
+Feature Engineering
+│
+▼
+Leakage Controls
+│
+▼
+Unified Feature Representation
+│
+▼
+Class-Distribution Analysis
+│
+
+=== PAGE 14 ===
+▼
+Training-Only Balancing (if justified)
+│
+▼
+ML TRAINING
+│
+┌─────────┬───────┬────┴────┬─────────┐
+▼ ▼ ▼ ▼ ▼
+Decision Random XGBoost LightGBM MLP
+Tree Forest
+└─────────┴───────┬───────┴─────────┘
+▼
+Model Evaluation
+│
+┌─────────────────┼─────────────────┐
+▼ ▼ ▼
+STRESS ANXIETY DEPRESSION
+└─────────────────┼─────────────────┘
+▼
+Calibration
+│
+▼
+Fairness Assessment / Mitigation
+│
+▼
+Model Selection
+│
+▼
+
+=== PAGE 15 ===
+SHAP + DiCE
+│
+▼
+Ablation / Error Analysis
+│
+▼
+RAG Evidence Retrieval
+│
+▼
+Generative AI
+│
+┌─────────────┴─────────────┐
+▼ ▼
+Individual Worker Report Organization Report
+└─────────────┬─────────────┘
+▼
+Streamlit + Plotly
+3.2 Data Preprocessing
+The following steps will be performed:
+Load datasets.
+Inspect data types and validate schema.
+Identify missing values and apply justified imputation.
+Identify duplicate records.
+Handle invalid values.
+Encode categorical variables.
+Calculate derived variables.
+Analyze outliers.
+Analyze class distribution per target.
+
+=== PAGE 16 ===
+Normalize/standardize numerical features where required.
+Separate input variables and targets.
+Perform a strict train/validation/test split before any learned preprocessing or resampling.
+Retain dataset/source labels for later ablation and error analysis.
+3.3 Feature Engineering
+Feature engineering will convert raw variables into meaningful indicators.
+Physical Features
+Steps
+Activity level / physical activity intensity
+Environmental Features
+Temperature
+Humidity
+Environmental stress indicator
+Occupational Features
+Weekly work hours
+Patients per shift
+Workload intensity
+Work-hour category / patient-load category
+Department and department-level contextual features
+Psychological Features
+DASS depression indicators
+DASS anxiety indicators
+DASS stress indicators
+(subscale indicators constructed while preventing target leakage)
+Workforce Features
+Workplace stressor indicators
+Burnout / job-satisfaction / absence / turnover-related variables, after exact CSV schema verification
+
+=== PAGE 17 ===
+Interaction Features
+Only where supported by domain rationale and validated improvement
+The exact final feature set will be determined through exploratory data analysis and validation.
+3.4 Unified Feature Representation
+Physical
++
+Environmental
++
+Occupational
++
+Psychological
++
+Workforce
+↓
+Harmonized Feature Schema
+(compatible scales, target definitions,
+source/population metadata)
+↓
+Machine Learning Models
+The purpose is to allow the model to analyze multiple dimensions relevant to healthcare-worker
+mental health, while keeping each source identifiable so that its contribution can be tested
+experimentally.
+3.5 Target Variables
+The system will investigate three prediction tasks:
+Stress Prediction — predict stress risk/severity.
+Anxiety Prediction — predict anxiety risk/severity.
+Depression Prediction — predict depression risk/severity.
+
+=== PAGE 18 ===
+These may be implemented as separate classification outputs or as coordinated outputs within the
+unified framework. Where confirmed in the fourth dataset, workforce indicators such as burnout or
+job satisfaction may serve as auxiliary analysis targets.
+3.6 Data Leakage Prevention
+Data leakage will be explicitly controlled.
+For example, when predicting depression severity, the final depression score cannot be used as an
+input feature.
+Instead:
+DASS Questionnaire Responses
++
+Relevant Contextual Features
+↓
+Depression Prediction
+Similarly:
+Target-derived features will not be allowed to leak into the input variables.
+Scalers, encoders, imputers and resamplers will be fitted only on training data.
+Resampling will never be applied to validation or test sets.
+3.7 Class Imbalance
+The class distribution of each target will be analyzed. If imbalance is significant, appropriate
+techniques may be investigated, including class weighting, stratified sampling, SMOTE where
+appropriate, and other resampling techniques. The technique will be selected based on the actual
+dataset distribution rather than being applied unnecessarily.
+Every resampling method must be applied only to the training portion of the data. Validation and test
+sets must retain their original distributions.
+Experiment Purpose
+Baseline Measure model behavior without resampling
+Class
+Change training loss/cost without synthesizing samples
+weighting
+SMOTE Increase representation of minority classes in training data
+
+=== PAGE 19 ===
+Experiment Purpose
+Determine whether balancing improves recall/F1 without unacceptable calibration or
+Comparison
+fairness degradation
+CHAPTER 4 — MACHINE LEARNING MODELS
+Five machine-learning algorithms will be compared.
+4.1 Decision Tree
+Decision Tree will be used as the basic interpretable baseline.
+Advantages
+Simple
+Easy to visualize
+Easy to explain
+Handles nonlinear relationships
+Disadvantage
+Can overfit without parameter constraints.
+Important parameters include: max_depth, min_samples_split, min_samples_leaf.
+4.2 Random Forest
+Random Forest combines multiple decision trees to improve robustness and generalization. It will be
+retained from the previous project to provide continuity.
+Advantages include robustness, handling of nonlinear relationships, feature importance and good
+performance on structured data.
+4.3 XGBoost
+XGBoost is a gradient-boosting algorithm based on decision trees. It will be retained from the previous
+project because of its strong performance on structured/tabular datasets.
+4.4 LightGBM
+LightGBM is another gradient-boosting algorithm. It provides an important comparison with XGBoost.
+Parameters that may be tuned include: num_leaves, max_depth, learning_rate, n_estimators,
+min_child_samples.
+Care will be taken to control overfitting, especially because some of the datasets are relatively small.
+
+=== PAGE 20 ===
+4.5 Multilayer Perceptron
+The existing MLP will be retained.
+A possible architecture is:
+Input
+↓
+Dense Layer – 64
+↓
+Dense Layer – 32
+↓
+Dense Layer – 16
+↓
+Output
+Potential techniques: ReLU, Batch Normalization, Dropout, Adam optimizer, Early stopping.
+The final architecture will be tuned according to the unified feature set.
+4.6 Hyperparameter Tuning Strategy
+Hyperparameter tuning will be performed using a controlled validation strategy, preferably stratified
+cross-validation for classification tasks. The exact search space will be reported so that the final
+comparison is reproducible, and tuning will be performed without touching the test set.
+4.7 Model Comparison
+Model Type Role
+Decision Tree Single tree Interpretable baseline
+Random Forest Bagging ensemble Robust tree ensemble
+XGBoost Gradient boosting Existing high-performance model
+LightGBM Gradient boosting New boosting comparison
+MLP Neural network Nonlinear model comparison
+CHAPTER 5 — MODEL EVALUATION
+
+=== PAGE 21 ===
+5.1 Predictive Performance Metrics
+Accuracy — measures overall classification correctness.
+$$Accuracy = \frac{Correct\ Predictions}{Total\ Predictions}$$
+Precision — measures how many predicted positive cases are actually positive.
+$$Precision = \frac{TP}{TP+FP}$$
+Recall — measures how many actual positive cases are correctly identified.
+$$Recall = \frac{TP}{TP+FN}$$
+F1 Score — balances precision and recall.
+$$F1 = 2 \times \frac{Precision \times Recall}{Precision + Recall}$$
+Confusion Matrix — confusion matrices will be generated for each prediction task.
+ROC-AUC — ROC-AUC will be used where the target formulation makes it appropriate.
+5.2 Expanded Evaluation Framework
+The evaluation is extended beyond predictive performance into four additional dimensions.
+Evaluation
+Metrics / outputs Question answered
+dimension
+Predictive Accuracy, precision, recall, F1, ROC-AUC, confusion How well does the model
+performance matrix classify?
+Do predicted probabilities
+Calibration Brier score, ECE, reliability diagram correspond to observed
+frequencies?
+Group TPR/FPR differences, demographic parity
+Does performance differ across
+Fairness measures, disparate-impact style ratios where
+groups?
+appropriate
+Why did the model produce this
+Explainability Global/local SHAP, DiCE counterfactuals
+prediction?
+Does the conclusion depend on a
+Robustness Dataset/source ablations, error analysis
+specific source or feature group?
+5.3 Final Results Table
+The final report will contain:
+
+=== PAGE 22 ===
+Model Stress Anxiety Depression Weighted F1 Brier ECE Fairness Gap
+Decision Tree TBD TBD TBD TBD TBD TBD TBD
+Random Forest TBD TBD TBD TBD TBD TBD TBD
+XGBoost TBD TBD TBD TBD TBD TBD TBD
+LightGBM TBD TBD TBD TBD TBD TBD TBD
+MLP TBD TBD TBD TBD TBD TBD TBD
+Actual values will be inserted only after model training.
+CHAPTER 6 — PROBABILITY CALIBRATION (New Chapter)
+Calibration is added because a risk system should distinguish between a ranking model and a
+probability estimate. A model producing 0.80 risk should be tested for whether cases receiving
+approximately 0.80 probability actually exhibit the outcome at roughly that frequency in a suitable
+evaluation population.
+6.1 Methods
+Reliability diagram — compare predicted probability bins with observed event frequency.
+Brier score — evaluate probabilistic prediction error.
+Expected Calibration Error (ECE) — summarize the gap between predicted confidence and observed
+frequency across bins.
+Platt/sigmoid scaling or isotonic regression — investigate post-hoc calibration using validation data
+only.
+Report calibration before and after calibration rather than assuming calibration automatically
+improves.
+6.2 Evaluation Protocol
+Calibration will be evaluated separately for each target, because stress, anxiety and depression may
+have different class distributions and model behavior.
+Calibration will be fitted on a validation split and reported on the held-out test split.
+Calibration will be re-measured after class balancing, since resampling can distort predicted
+probabilities.
+Instability of calibration estimates on small test sets will be explicitly acknowledged.
+
+=== PAGE 23 ===
+6.3 Output
+Calibrated probabilities feed directly into:
+The individual risk report
+The low-confidence / uncertainty flag
+The Model Comparison dashboard page
+CHAPTER 7 — FAIRNESS AND BIAS MITIGATION (New Chapter)
+The original proposal identified bias as an ethical consideration and stated that potential dataset
+biases should be acknowledged. The expanded framework operationalizes this requirement with
+explicit measurement and mitigation using Fairlearn.
+7.1 Fairness Workflow
+Identify demographic/contextual attributes actually available and appropriate for analysis in the
+chosen datasets.
+Evaluate whether sample sizes are sufficient for meaningful group comparisons.
+Measure group-specific recall, false-positive rate, false-negative rate and related fairness statistics.
+Use Fairlearn to visualize and compare performance across groups.
+Where justified, investigate mitigation such as reweighting, threshold optimization or other
+constrained approaches.
+Compare baseline versus mitigated models across performance, calibration and fairness together,
+rather than optimizing one metric in isolation.
+7.2 Constraints on the Analysis
+Fairness analysis must not invent demographic variables that are absent from the source data. If a
+dataset does not contain an appropriate sensitive attribute, the report will state clearly that fairness
+for that dimension could not be evaluated.
+Where group sample sizes are too small for stable estimates, the report will present the result as
+indicative only.
+7.3 Reported Outputs
+Group-wise performance table
+Fairness gap metrics (e.g. equalized-odds difference, demographic parity difference)
+Baseline vs mitigated comparison
+
+=== PAGE 24 ===
+Discussion of trade-offs between fairness, accuracy and calibration
+CHAPTER 8 — EXPLAINABLE AI
+8.1 SHAP
+SHAP will be used to understand how different features influence model predictions.
+The goal is not only:
+"What did the model predict?"
+but also:
+"Why did the model make this prediction for this healthcare worker?"
+8.2 Global Explainability
+Global SHAP analysis will identify the most important features across the dataset.
+Potential categories include:
+Occupational factors
+Psychological factors
+Physical factors
+Environmental factors
+Workforce factors
+The actual feature rankings will be obtained experimentally.
+8.3 Local Explainability
+For an individual healthcare worker:
+Predicted Stress Risk: High
+SHAP can provide:
+Feature A → increased predic(cid:415)on
+Feature B → increased predic(cid:415)on
+Feature C → decreased predic(cid:415)on
+This allows the system to provide an explanation rather than simply returning a classification.
+8.4 Explainability Across Models
+
+=== PAGE 25 ===
+SHAP-based explanations will be investigated for Decision Tree, Random Forest, XGBoost, LightGBM
+and MLP. The appropriate SHAP explainer (TreeExplainer, KernelExplainer, DeepExplainer, etc.) will be
+selected based on the model type.
+8.5 DiCE Counterfactual Explanations (New Addition)
+DiCE adds a complementary explanation question. Instead of only asking why the model predicted a
+given risk, the system can investigate what feasible input changes would alter the model's prediction.
+Generate counterfactual examples for suitable tabular models.
+Apply feasibility constraints so unrealistic changes are not suggested.
+Separate actionable variables (e.g. weekly work hours, activity level) from immutable/contextual
+variables (e.g. department, demographic attributes).
+Present counterfactuals as model-based scenarios, not medical prescriptions.
+Example format
+Current prediction: Stress Risk = High
+Counterfactual scenario:
+Weekly work hours: 64 → 52
+Patients per shift: 18 → 14
+→ Predicted Stress Risk = Moderate
+(Model-based what-if scenario only.
+Not a causal claim or a clinical recommendation.)
+8.6 Explanation Handoff Rule
+Only model-generated evidence — prediction, calibrated probability, SHAP contributions and DiCE
+counterfactuals — is passed into the reporting layer. The reporting layer does not compute or modify
+risk.
+CHAPTER 9 — ABLATION STUDY DESIGN (New Chapter)
+Ablation studies provide direct evidence for whether each data source and methodological component
+contributes to the final framework.
+
+=== PAGE 26 ===
+Ablation group Example configurations
+Stress-Lysis only; Workplace only; DASS only; fourth dataset only; selected
+Dataset ablation
+combinations; all sources
+Feature-group
+Physical/environmental; occupational; psychological; workforce; all groups
+ablation
+Balancing ablation No balancing vs class weighting vs SMOTE
+Calibration ablation Uncalibrated vs calibrated
+Fairness ablation Baseline vs mitigation
+Explanation
+SHAP-only vs SHAP + DiCE
+ablation
+Report ablation Direct GenAI vs grounded RAG + model evidence
+For every ablation, the same evaluation metrics are recorded so that improvements and trade-offs can
+be discussed quantitatively. Negative results will be reported rather than hidden.
+CHAPTER 10 — GENERATIVE AI AND RAG
+The existing Generative AI component will be retained and expanded with a Retrieval-Augmented
+Generation (RAG) layer, so that narrative recommendations are grounded in a controlled evidence
+collection.
+10.1 Inputs to the Generative Layer
+The ML system produces:
+Prediction
++
+Calibrated Probability
++
+Uncertainty / Confidence Flag
++
+SHAP Feature Contributions
++
+
+=== PAGE 27 ===
+DiCE Counterfactual Scenarios
++
+Structured Context (department, workload, etc.)
+10.2 Proposed RAG Flow
+Model prediction + calibrated probability + SHAP + DiCE + structured context
+↓
+Retrieval of approved evidence passages
+↓
+Prompt = model evidence | retrieved evidence
+↓
+Generative AI
+↓
+Report with source-aware language
+10.3 RAG Requirements
+Create a small curated evidence corpus from appropriate public/academic/organizational sources on
+occupational stress and workplace wellbeing.
+Retrieve relevant passages based on the report topic.
+Give the LLM the prediction and explanations separately from retrieved evidence.
+Instruct the LLM not to change the model prediction.
+Require cautious language for uncertainty and limitations.
+Clearly distinguish model-derived observations from general evidence and recommendations.
+Include a non-diagnostic disclaimer in every generated report.
+10.4 Example
+Input
+Healthcare Worker
+Department: ICU
+High workload
+Long working hours
+
+=== PAGE 28 ===
+Elevated psychological indicators
+Model Output
+Stress Risk: High (p = 0.83, calibrated)
+Anxiety Risk: Moderate (p = 0.54, calibrated)
+Depression Risk: Low (p = 0.18, calibrated)
+SHAP
+Workload → increases stress predic(cid:415)on
+Work Hours → increases stress predic(cid:415)on
+Feature X → increases anxiety predic(cid:415)on
+Feature Y → decreases risk
+DiCE
+Reducing weekly hours and patients per shift
+moves the predicted stress category downward.
+Generative AI
+The system converts these results into an understandable, evidence-grounded summary without
+altering the prediction.
+10.5 Safety
+The system must never claim to diagnose a healthcare worker. It should state:
+"The prediction represents a machine-learning-based risk estimate and is not a clinical diagnosis."
+The system is intended for research, education, awareness and experimental prediction.
+RAG does not make a report medically authoritative — the quality of retrieved evidence remains a
+limitation, and the Generative AI layer may hallucinate unless tightly constrained and evaluated.
+CHAPTER 11 — TWO REPORT TYPES (New Chapter)
+11.1 Individual / Healthcare Worker Report
+Stress, anxiety and depression risk estimates.
+Calibrated probabilities where supported by evaluation.
+Risk category and uncertainty/low-confidence flag where appropriate.
+
+=== PAGE 29 ===
+Top SHAP contributing factors.
+Counterfactual scenarios where feasible.
+General, non-clinical wellness information grounded through RAG.
+Clear disclaimer that the result is a model-based risk estimate, not a diagnosis.
+11.2 Organization / Workforce Report
+Aggregate department-level patterns where sample sizes support reporting.
+Stress/burnout and other workforce indicators available in the fourth dataset.
+Workload and job-satisfaction patterns where available.
+Model performance and calibration summary.
+Fairness comparison across supported groups.
+Top global SHAP factors.
+Error and uncertainty analysis.
+Evidence-grounded organizational considerations rather than individualized medical
+recommendations.
+Aggregate reporting will be used wherever individual privacy or small sample sizes make individual
+reporting inappropriate.
+CHAPTER 12 — STREAMLIT + PLOTLY APPLICATION
+The existing Streamlit application will be expanded rather than rebuilding the entire application
+architecture. There is no requirement for a separate frontend, backend or database for this project.
+Plotly is added inside the same application for interactive analytical visualization.
+12.1 Proposed Interface
+AURA WELLNESS
+│
+├── Home
+│ └── Purpose, workflow, limita(cid:415)ons
+│
+├── Individual Assessment
+│ ├── Stress Prediction
+
+=== PAGE 30 ===
+│ ├── Anxiety Prediction
+│ └── Depression Predic(cid:415)on
+│
+├── Explainability
+│ ├── SHAP (global / local)
+│ └── DiCE Counterfactuals
+│
+├── Model Comparison
+│ ├── Performance
+│ ├── Calibration
+│ └── Fairness
+│
+├── Dataset / Ablation Analysis
+│
+├── Organization Analytics
+│
+├── AI Generated Report
+│ ├── Individual Report
+│ └── Organiza(cid:415)on Report
+│
+└── Responsible AI
+└── Fairness, calibra(cid:415)on, limita(cid:415)ons, data-source caveats
+12.2 Page Contents
+Page / module Main contents
+Home Project purpose, limitations and workflow
+Inputs, stress/anxiety/depression predictions, probabilities and
+Individual Assessment
+explanations
+
+=== PAGE 31 ===
+Page / module Main contents
+Explainability SHAP plots and DiCE counterfactuals
+Model Comparison Performance, calibration and fairness charts
+Dataset / Ablation
+Feature-group and dataset experiment comparisons
+Analysis
+Organization Analytics Department/workforce-level aggregates and patterns
+AI Report RAG-grounded individual or organization report
+Responsible AI Fairness, calibration, limitations and data-source caveats
+12.3 User Workflow
+Healthcare Worker Data
+↓
+Data Preprocessing
+↓
+Feature Engineering
+↓
+Unified Feature Representation
+↓
+Five ML Models
+↓
+Mental Health Predictions
+↓
+Calibrated Probabilities
+↓
+SHAP + DiCE Explanation
+↓
+RAG Evidence Retrieval
+↓
+
+=== PAGE 32 ===
+Generative AI
+↓
+Individual / Organization Report
+↓
+Plotly Interactive Analytics
+CHAPTER 13 — SYSTEM REQUIREMENTS
+13.1 Software / Technology Stack
+Layer Technology / method Purpose
+Programming Python Core implementation
+Environment Jupyter Notebook Experimentation
+Data Pandas, NumPy Loading, cleaning and feature engineering
+ML scikit-learn Preprocessing, evaluation and classical models
+Boosting XGBoost, LightGBM Gradient-boosted models
+Neural network TensorFlow/Keras MLP
+Imbalance SMOTE / class weighting Minority-class handling where justified
+XAI SHAP Global/local feature attribution
+Counterfactual XAI DiCE What-if explanations
+Fairness Fairlearn Bias measurement and mitigation experiments
+Calibration scikit-learn / custom ECE Probability reliability
+Experiment evaluation Ablation framework Quantify component contributions
+Visualization Matplotlib, Seaborn, Plotly Static and interactive charts
+Application Streamlit Interactive interface
+GenAI Generative AI API Natural-language reports
+Knowledge grounding RAG Evidence-grounded report generation
+
+=== PAGE 33 ===
+Layer Technology / method Purpose
+Experiment tracking MLflow (optional) Tracking of runs, parameters and metrics
+13.2 Hardware
+The project does not require high-end infrastructure.
+Recommended:
+8 GB RAM minimum
+16 GB RAM preferred
+Modern multi-core CPU
+GPU optional
+13.3 Optional: MLflow
+MLflow is not essential to the scientific core, but it is a useful engineering layer if time permits. Each
+experiment can record the dataset configuration, feature group, balancing method, model,
+hyperparameters, performance metrics, calibration metrics and fairness metrics.
+A useful experiment naming structure is:
+target_datasetConfiguration_balance_model_calibration_fairness
+This makes it easier to demonstrate that the final result came from a controlled experiment rather
+than a single manually selected run.
+CHAPTER 14 — IMPLEMENTATION PLAN
+Phase Activities
+Phase 1 — Baseline Clone existing project; verify existing notebooks; reproduce existing results;
+Reproduction verify Streamlit application.
+Phase 2 — Dataset Obtain DASS-42 and the fourth workforce dataset; understand questionnaire
+Acquisition structure; calculate/verify DASS scores; verify schemas and licenses.
+Missing values, duplicates, target distributions, source/population metadata,
+Phase 3 — Data Audit
+leakage risks, synthetic-data status.
+Phase 4 — Dataset Process Stress-Lysis, workplace data, DASS-42 and the workforce dataset;
+Processing standardize features; handle missing values.
+Phase 5 — Build source-specific representations and a controlled unified analytical
+
+=== PAGE 34 ===
+Phase Activities
+Harmonization schema; establish prediction targets; prevent data leakage.
+Phase 6 — Feature Create justified physical, environmental, occupational, psychological and
+Engineering workforce features.
+Train Decision Tree, Random Forest, XGBoost, LightGBM and MLP using
+Phase 7 — Baseline ML
+controlled train/validation/test procedures.
+Phase 8 — Imbalance Compare baseline, class weighting and SMOTE where needed (training data
+Experiments only).
+Accuracy, precision, recall, F1-score, confusion matrix, ROC-AUC where
+Phase 9 — Evaluation
+applicable.
+Generate reliability curves; calculate Brier/ECE; test Platt/isotonic calibration;
+Phase 10 — Calibration
+report before and after.
+Phase 11 — Fairness Measure group disparities with Fairlearn and test appropriate mitigation.
+Phase 12 — Implement global SHAP, local SHAP, feature importance and constrained DiCE
+Explainability counterfactuals.
+Run dataset, feature, imbalance, calibration, fairness and explanation
+Phase 13 — Ablation
+ablations.
+Phase 14 — RAG + Build curated evidence corpus, retrieval pipeline and grounded report
+GenAI prompts; integrate prediction, probability, SHAP, DiCE and AI summary.
+Phase 15 — Dashboard Extend Streamlit with Plotly visualizations and individual/organization views.
+Compare all five models across predictive, calibration, fairness and
+Phase 16 — Final
+explainability outcomes; analyze errors, important features, strengths and
+Evaluation
+limitations.
+Phase 17 — Report limitations, synthetic-data caveats, ethical considerations and
+Documentation reproducibility.
+CHAPTER 15 — EXPECTED RESULTS
+The project is expected to produce:
+A four-source unified analytical framework for healthcare-worker mental-health risk prediction.
+
+=== PAGE 35 ===
+Prediction across three dimensions: Stress, Anxiety, Depression.
+A five-model predictive comparison.
+Quantitative evidence from dataset and feature ablation studies.
+A class-imbalance comparison using justified balancing methods.
+Calibration analysis showing whether risk probabilities are reliable.
+Fairness analysis identifying supported group-level disparities and mitigation effects.
+SHAP-based global and local explanations.
+DiCE counterfactual explanations where feasible.
+Two report types for individual and organization-oriented interpretation.
+RAG-grounded Generative AI reports that do not independently determine model predictions.
+An interactive Plotly/Streamlit application.
+A clear statement of the limits of synthetic, heterogeneous and non-clinically validated data.
+CHAPTER 16 — EXPECTED CONTRIBUTION
+The main contribution is the transition from a stress and burnout prediction system for healthcare
+workers into a broader, responsible and experimentally validated mental-health risk prediction
+framework for healthcare workers.
+The framework considers four perspectives:
+PHYSICAL / ENVIRONMENTAL
+↓
+Stress-Lysis
+OCCUPATIONAL
+↓
+Healthcare Workplace Survey
+PSYCHOLOGICAL
+↓
+
+=== PAGE 36 ===
+DASS-42
+WORKFORCE
+↓
+Healthcare Workforce Mental Health Dataset
+These complementary sources are transformed into a unified analytical framework.
+The project additionally compares five different machine-learning algorithms and incorporates class-
+imbalance experiments, calibration, fairness assessment, Explainable AI (SHAP + DiCE), ablation
+studies, RAG-grounded Generative AI and interactive analytics.
+CHAPTER 17 — LIMITATIONS
+17.1 Different Data Sources
+The four datasets originate from different sources and populations. Therefore, they should not be
+interpreted as one naturally collected healthcare-worker cohort, and they do not represent a
+longitudinal cohort.
+17.2 Different Feature Spaces
+The datasets measure different aspects of human behavior and mental health. Therefore, feature
+engineering and normalization are required before constructing the unified framework.
+17.3 DASS-42 Dataset Population
+DASS-42 itself is a psychological assessment instrument and is not inherently restricted to healthcare
+workers. Therefore, the report should not falsely claim that every DASS-42 respondent is a healthcare
+worker. Instead, DASS-42 serves as the psychological component of the framework, while the project's
+application domain remains healthcare workers.
+17.4 Synthetic Fourth Dataset
+The Healthcare Workforce Mental Health dataset may be synthetic. If so, its results must not be
+interpreted as real-world prevalence or clinical evidence, and its role is restricted to methodological
+and workforce-analysis experiments.
+17.5 Dataset Shift
+Different source distributions can create dataset shift, which may affect generalization across sources.
+17.6 Self-Reported Information
+DASS-42 is based on self-reported responses, which may introduce reporting bias.
+
+=== PAGE 37 ===
+17.7 Fairness Limitations
+Fairness analysis is limited by the sensitive attributes actually present in the data and by the sample
+sizes available for each group.
+17.8 Calibration Limitations
+Calibration estimates may be unstable for small test sets, and calibration fitted on one source may not
+transfer to another.
+17.9 Resampling Limitations
+SMOTE can create synthetic minority samples that do not necessarily correspond to real individuals.
+17.10 Counterfactual Limitations
+Counterfactuals are model-based what-if scenarios, not guaranteed causal effects.
+17.11 Generative AI Limitations
+RAG does not make a report medically authoritative; retrieved evidence quality remains important.
+Generative AI may hallucinate unless tightly constrained and evaluated.
+17.12 No Clinical Diagnosis
+The system is not clinically validated and should not be used to diagnose mental-health disorders.
+CHAPTER 18 — ETHICAL AND RESPONSIBLE-AI CONSIDERATIONS
+Privacy — Personal and identifiable information should not be unnecessarily collected or exposed.
+Responsible Prediction — Predictions must be presented as risk estimates rather than diagnoses.
+Transparency — The system should explain the factors influencing predictions, and show uncertainty
+and limitations where appropriate.
+Bias — Potential biases within datasets should be measured where possible and acknowledged where
+measurement is not possible. Fairness mitigation must not be used to conceal poor data quality.
+Generative AI — The Generative AI system should explain model outputs rather than make medical
+claims, and must not override model outputs. Model predictions, explanations and retrieved evidence
+must remain distinguishable in the report.
+Aggregation — Use aggregate organization analytics where individual privacy or small sample sizes
+make individual reporting inappropriate.
+Documentation — Synthetic-data usage must be documented explicitly.
+
+=== PAGE 38 ===
+Honest Reporting — Negative results and trade-offs must be reported rather than selecting only
+favorable experiments.
+No Guaranteed Outcomes — Do not generate recommendations that imply guaranteed clinical
+outcomes.
+CHAPTER 19 — FUTURE SCOPE
+The project could later be extended with:
+Wearable Data
+Heart rate, HRV, sleep, activity, physiological signals
+Longitudinal Monitoring
+Day 1 → Day 2 → Day 3 → Day 4 → Mental Health Trend
+Real-Time Healthcare Worker Monitoring
+Future systems could potentially monitor changes in risk over time.
+Mobile Application
+The Streamlit prototype could later be converted into a mobile or web application.
+Advanced Deep Learning
+Future models could include LSTM, GRU and Transformer architectures.
+Multimodal Mental Health
+Questionnaires + Wearables + Behavioral Data + Occupational Data + Text
+Causal Analysis
+Moving from counterfactual what-if scenarios toward causal inference methods.
+CHAPTER 20 — PROJECT NOVELTY
+The project's novelty is:
+A unified, explainable, fair and calibrated multi-source machine-learning framework specifically
+focused on mental-health risk prediction among healthcare workers, incorporating physical,
+environmental, occupational, psychological and workforce information, and grounding its generated
+reports in retrieved evidence.
+The novelty does not come from inventing new ML algorithms. Instead, it comes from the integration
+and experimental evaluation of several complementary layers.
+
+=== PAGE 39 ===
+Novelty component Contribution
+Multi-source Four heterogeneous sources representing different information dimensions
+Multi-task Stress, anxiety and depression risk assessment
+Responsible AI Explicit fairness and calibration analysis
+Explainable AI SHAP plus counterfactual DiCE explanations
+Experimental rigor Ablation studies and controlled comparisons
+Evidence-grounded GenAI RAG separates evidence retrieval from model prediction
+Stakeholder views Individual and organization-oriented reports
+Interactive analytics Plotly + Streamlit model and workforce analysis
+Continuity Direct extension of the previous semester's system
+CHAPTER 21 — FINAL SCOPE JUSTIFICATION
+The strongest version of the project is not the one with the greatest number of technologies. It is the
+one in which every technology answers a research question. The proposed additions have clear roles:
+Component Research question it supports
+Does an additional workforce-oriented source improve robustness or add
+Fourth dataset
+complementary information?
+SMOTE / class
+How does imbalance handling affect minority-class detection?
+weighting
+Are predictions and errors distributed differently across supported groups, and
+Fairlearn
+can mitigation help?
+Calibration Can the model probabilities be trusted as probabilities?
+SHAP Which features drive predictions?
+DiCE What feasible input changes alter model predictions?
+Ablation Which data sources and methodological components actually matter?
+RAG
+Can generated reports be grounded in retrieved evidence rather than free-form
+
+=== PAGE 40 ===
+Component Research question it supports
+generation?
+Plotly Can complex model, fairness and workforce results be explored interactively?
+Can the final result be shown to come from a controlled, reproducible
+MLflow (optional)
+experiment?
+This structure turns the project into a coherent experimental framework rather than a collection of
+unrelated features, while preserving the original direction, architecture and non-clinical positioning.
+FINAL SYSTEM ARCHITECTURE
+HEALTHCARE WORKERS
+│
+▼
+┌────────────────────────────┐
+│ Mental Health Risk │
+│ Predic(cid:415)on │
+└─────────────┬──────────────┘
+│
+┌──────────────┬─────────┼─────────┬──────────────┐
+▼ ▼ ▼ ▼
+┌─────────┐ ┌────────────┐ ┌───────────┐ ┌──────────────┐
+│ Stress- │ │ Workplace │ │ DASS-42 │ │ Healthcare │
+│ Lysis │ │ Survey │ │ │ │ Workforce │
+└────┬────┘ └─────┬──────┘ └─────┬─────┘ └──────┬───────┘
+│ │ │ │
+▼ ▼ ▼ ▼
+Physical & Occupational Psychological Workforce
+Environmental Factors Factors Factors
+Factors
+
+=== PAGE 41 ===
+│ │ │ │
+└────────────┴─────────┬────────┴──────────────┘
+▼
+Source Validation
+│
+▼
+Data Preprocessing
+│
+▼
+Feature Engineering
+│
+▼
+Leakage Controls
+│
+▼
+Unified Feature Representation
+│
+▼
+Class-Distribution Analysis
+│
+▼
+Training-Only Balancing (if justified)
+│
+▼
+MACHINE LEARNING
+│
+┌──────────┬──────────┬─┴────────┬──────────┐
+▼ ▼ ▼ ▼ ▼
+
+=== PAGE 42 ===
+Decision Random XGBoost LightGBM MLP
+Tree Forest
+└──────────┴──────────┼──────────┴──────────┘
+▼
+Model Evaluation
+│
+┌────────────────────┼────────────────────┐
+▼ ▼ ▼
+STRESS ANXIETY DEPRESSION
+└────────────────────┼────────────────────┘
+▼
+Calibration
+(Brier / ECE / Reliability)
+│
+▼
+Fairness Assessment & Mitigation
+(Fairlearn)
+│
+▼
+Model Selection
+│
+▼
+SHAP + DiCE
+│
+▼
+Ablation & Error Analysis
+│
+▼
+
+=== PAGE 43 ===
+RAG Evidence Retrieval
+│
+▼
+Generative AI
+│
+┌────────────────┴────────────────┐
+▼ ▼
+Individual Worker Organization
+Mental Health Report Workforce Report
+└────────────────┬────────────────┘
+▼
+STREAMLIT + PLOTLY
+FINAL END-TO-END WORKFLOW
+Healthcare-worker data / research datasets
+→ Data audit
+→ Source-specific preprocessing
+→ Feature engineering
+→ Leakage control
+→ Unified analy(cid:415)cal representa(cid:415)on
+→ Class-distribution analysis
+→ Training-only SMOTE / class weighting when justified
+→ DT / RF / XGBoost / LightGBM / MLP
+→ Performance evalua(cid:415)on
+→ Calibra(cid:415)on
+→ Fairness analysis & mi(cid:415)ga(cid:415)on
+→ Model comparison
+
+=== PAGE 44 ===
+→ SHAP
+→ DiCE
+→ Abla(cid:415)on & error analysis
+→ Calibrated risk outputs
+→ RAG retrieval
+→ Evidence-grounded Generative AI
+→ Individual / organiza(cid:415)on report
+→ Plotly visual analy(cid:415)cs
+→ Streamlit applica(cid:415)on
+FINAL PROJECT EVOLUTION
+Previous Semester
+Explainable Generative AI for Stress and Burnout Risk Prediction in Healthcare Workers
+Healthcare Workers
+↓
+2 Datasets
+↓
+Stress + Burnout
+↓
+Random Forest, XGBoost, MLP
+↓
+SHAP
+↓
+Generative AI
+↓
+Streamlit
+Current Semester
+
+=== PAGE 45 ===
+Mental Health Prediction Using Machine Learning for Healthcare Workers
+Healthcare Workers
+↓
+4 Datasets
+↓
+Stress-Lysis + Healthcare Workplace Survey
++ DASS-42 + Healthcare Workforce Dataset
+↓
+Unified Multi-Source Framework
+↓
+Stress + Anxiety + Depression
+↓
+Decision Tree, Random Forest, XGBoost, LightGBM, MLP
+↓
+Class Imbalance Experiments (SMOTE / class weighting)
+↓
+Calibration (Brier / ECE / reliability)
+↓
+Fairness (Fairlearn)
+↓
+SHAP + DiCE
+↓
+Ablation Studies
+↓
+RAG-Grounded Generative AI
+↓
+Individual + Organization Reports
+
+=== PAGE 46 ===
+↓
+Streamlit + Plotly (MLflow optional)
+Comparison Table
+Previous / Existing Direction Current Expanded Direction
+2 datasets 4 complementary datasets
+Stress + burnout focus Stress + anxiety + depression, with workforce-level indicators
+RF, XGBoost, MLP Decision Tree, RF, XGBoost, LightGBM, MLP
+Standard ML metrics Performance + calibration + fairness + error analysis
+SHAP explanations SHAP + DiCE counterfactual explanations
+Single AI report Individual and organization-oriented reports
+Generative AI RAG + evidence-grounded Generative AI
+Streamlit Streamlit + Plotly interactive analytics
+No explicit fairness layer Fairlearn-based bias assessment and mitigation
+No systematic component study Ablation and controlled comparison experiments
+No experiment tracking Optional MLflow tracking layer
+The expansion can therefore be summarized in one line:
+The project evolves from predicting stress and burnout among healthcare workers to a broader,
+explainable, fair and calibrated machine-learning framework for predicting stress, anxiety and
+depression risk among healthcare workers using complementary physical, occupational, psychological
+and workforce information, with evidence-grounded report generation.
+

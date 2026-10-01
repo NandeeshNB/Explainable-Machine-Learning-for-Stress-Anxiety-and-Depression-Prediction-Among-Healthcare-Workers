@@ -1,0 +1,87 @@
+Total cells: 85
+
+Cell 0 [MARKDOWN]: # Explainable Generative AI for Stress and Burnout Risk Prediction in Healthcare Workers
+Cell 1 [MARKDOWN]: ---
+Cell 2 [MARKDOWN]: ### 1.1 Import Required Libraries
+Cell 3 [CODE]: # Data manipulation and analysis libraries
+Cell 4 [MARKDOWN]: ### 1.2 Load Physiological Data (Stress-Lysis Dataset)
+Cell 5 [CODE]: # Load the physiological stress data
+Cell 6 [MARKDOWN]: ### 1.3 Load Workplace Survey Data
+Cell 7 [CODE]: # Load the workplace survey data
+Cell 8 [MARKDOWN]: ### 1.4 Exploratory Data Analysis - Physiological Data
+Cell 9 [CODE]: # Visualize the distribution of stress levels in physiological data
+Cell 10 [MARKDOWN]: ### 1.5 Exploratory Data Analysis - Workplace Survey Data
+Cell 11 [CODE]: # Visualize workplace survey data
+Cell 12 [MARKDOWN]: ### 1.6 Data Integration - Creating Combined Dataset
+Cell 13 [CODE]: # FIXED DATA INTEGRATION - Prevents overfitting
+Cell 14 [MARKDOWN]: ### 1.7 Feature Engineering
+Cell 15 [CODE]: # Create new features based on domain knowledge
+Cell 16 [MARKDOWN]: ### 1.8 Correlation Analysis
+Cell 17 [CODE]: # Select numerical features for correlation analysis
+Cell 18 [MARKDOWN]: ### 1.9 Multiple Linear Regression - Baseline Prediction Check
+Cell 19 [CODE]: # Perform Multiple Linear Regression to check linear relationships
+Cell 20 [MARKDOWN]: ### 1.10 Department-wise Stress Baseline Analysis
+Cell 21 [CODE]: # Compute department-wise stress baselines and statistics
+Cell 22 [MARKDOWN]: ---
+Cell 23 [MARKDOWN]: ### 2.1 Prepare Data for Machine Learning
+Cell 24 [CODE]: # Select features for modeling
+Cell 25 [MARKDOWN]: ### 2.2 Model 1: Random Forest Classifier (Baseline)
+Cell 26 [CODE]: # Train Random Forest model with VERY STRONG regularization
+Cell 27 [MARKDOWN]: ### 2.3 Model 2: XGBoost Classifier (Primary Model)
+Cell 28 [CODE]: # Train XGBoost model with VERY STRONG regularization
+Cell 29 [MARKDOWN]: ### 2.4 Model 3: Multi-Layer Perceptron (MLP) - Deep Learning
+Cell 30 [CODE]: # Convert target to categorical for MLP
+Cell 31 [CODE]: # Evaluate MLP model
+Cell 32 [MARKDOWN]: ### 2.5 Comprehensive Model Comparison
+Cell 33 [CODE]: # Compare all three models
+Cell 34 [MARKDOWN]: ### 2.6 Cross-Validation Analysis
+Cell 35 [CODE]: # Perform 5-fold cross-validation for tree-based models
+Cell 36 [MARKDOWN]: ### 2.7 Final Summary and Key Findings
+Cell 37 [CODE]: print("\n" + "="*80)
+Cell 38 [MARKDOWN]: ---
+Cell 39 [MARKDOWN]: ---
+Cell 40 [MARKDOWN]: ### 3.1 Install and Import SHAP
+Cell 41 [CODE]: # Install SHAP library (run once, then comment out)
+Cell 42 [MARKDOWN]: ### 3.2 SHAP Analysis for Random Forest
+Cell 43 [CODE]: # Initialize SHAP TreeExplainer for Random Forest
+Cell 44 [CODE]: # GLOBAL EXPLANATION: SHAP Summary (Beeswarm) Plot for Random Forest
+Cell 45 [CODE]: # GLOBAL EXPLANATION: Mean Absolute SHAP Bar Plot for Random Forest
+Cell 46 [CODE]: # LOCAL EXPLANATION: Waterfall Plot for Random Forest
+Cell 47 [MARKDOWN]: ### 3.3 SHAP Analysis for XGBoost
+Cell 48 [CODE]: # Initialize SHAP TreeExplainer for XGBoost
+Cell 49 [CODE]: # GLOBAL EXPLANATION: SHAP Summary (Beeswarm) Plot for XGBoost
+Cell 50 [CODE]: # GLOBAL EXPLANATION: Mean Absolute SHAP Bar Plot for XGBoost
+Cell 51 [CODE]: # LOCAL EXPLANATION: Waterfall Plot for XGBoost
+Cell 52 [MARKDOWN]: ### 3.4 SHAP Analysis for MLP (Deep Learning)
+Cell 53 [CODE]: # Initialize SHAP KernelExplainer for MLP
+Cell 54 [CODE]: # Create X_test_sample_df if it doesn't exist
+Cell 55 [CODE]: # ── NORMALIZE MLP SHAP VALUES ────────────────────────────────────────────────
+Cell 56 [CODE]: # GLOBAL EXPLANATION: SHAP Summary Plot for MLP
+Cell 57 [CODE]: # GLOBAL EXPLANATION: Mean Absolute SHAP Bar Plot for MLP
+Cell 58 [MARKDOWN]: ### 3.5 Cross-Model SHAP Comparison
+Cell 59 [CODE]: # CROSS-MODEL SHAP COMPARISON
+Cell 60 [MARKDOWN]: ### 3.6 SHAP Dependence Plots
+Cell 61 [CODE]: # SHAP DEPENDENCE PLOTS for top 4 features (XGBoost, High Stress class)
+Cell 62 [MARKDOWN]: ### 3.7 Department-wise SHAP Heatmap
+Cell 63 [CODE]: # DEPARTMENT-WISE SHAP ANALYSIS
+Cell 64 [CODE]: # HELPER FUNCTION - used in Phase 4 to build Gemini AI prompts
+Cell 65 [MARKDOWN]: ### 3.9 Phase 3 Summary
+Cell 66 [CODE]: print('\n' + '='*80)
+Cell 67 [MARKDOWN]: ---
+Cell 68 [MARKDOWN]: ### 4.1 Install and Setup Gemini AI
+Cell 69 [CODE]: # Install Google Generative AI library
+Cell 70 [CODE]: # ── CONFIGURE YOUR GEMINI API KEY ────────────────────────────────────────────
+Cell 71 [MARKDOWN]: ### 4.2 Prompt Templates for Stress Reports
+Cell 72 [CODE]: # ── PROMPT TEMPLATE FUNCTION ──────────────────────────────────────────────────
+Cell 73 [MARKDOWN]: ### 4.3 Generate Personalized Stress Reports
+Cell 74 [CODE]: # ── REPORT GENERATION FUNCTION ────────────────────────────────────────────────
+Cell 75 [MARKDOWN]: ### 4.4 Generate Sample Reports (One Per Stress Level)
+Cell 76 [CODE]: # ── Generate sample reports for Low, Medium, High stress ─────────────────────
+Cell 77 [CODE]: # ── DISPLAY SAMPLE REPORTS ────────────────────────────────────────────────────
+Cell 78 [MARKDOWN]: ### 4.5 Save Reports to Files
+Cell 79 [CODE]: # ── SAVE REPORTS TO FILES ─────────────────────────────────────────────────────
+Cell 80 [MARKDOWN]: ### 4.6 Batch Report Generation (Optional)
+Cell 81 [CODE]: # ── BATCH GENERATION FUNCTION ─────────────────────────────────────────────────
+Cell 82 [MARKDOWN]: ### 4.7 Phase 4 Summary
+Cell 83 [CODE]: print('\n' + '='*80)
+Cell 84 [CODE]: """
