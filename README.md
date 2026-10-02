@@ -89,12 +89,12 @@ pip install -r requirements.txt
 ### Step 4: Configure Gemini API Key (Optional for RAG Reports)
 
 To enable the RAG Generative AI report synthesis module:
-1. Obtain a free API key from [Google AI Studio](https://aistudio.google.com/).
-2. Create or update the `.env` file in the root folder:
+1. Obtain an API key from [Google AI Studio](https://aistudio.google.com/).
+2. Add your API key to the `.env` file in the root directory:
 ```env
-GEMINI_API_KEY=AIzaSyYourActualApiKeyHere
+GEMINI_API_KEY=your_api_key_here
 ```
-*(Note: You can also enter the API key directly in the Streamlit sidebar UI).*
+*(Note: You can also enter your API key directly in the Streamlit sidebar UI).*
 
 ---
 
